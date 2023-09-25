@@ -32,8 +32,8 @@ class UserController extends AbstractController
 
         $errors = Utils::dto($request->toArray(), $user, $this->validator);
 
-        if ($errors->count() > 0) {
-            return $this->json(['error' => (string) $errors], Response::HTTP_BAD_REQUEST);
+        if (count($errors) > 0) {
+            return $this->json(['error' => implode("\n", $errors)], Response::HTTP_BAD_REQUEST);
         }
 
         $hashedPassword = $this->passwordHasher->hashPassword(
